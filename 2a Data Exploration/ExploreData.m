@@ -1,4 +1,4 @@
-%% This script allows you to open and explore the data in a *.nc file
+%% This script allows you to open and explore the data in a *.nc file.
 clear all
 close all
 
