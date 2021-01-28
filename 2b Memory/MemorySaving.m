@@ -6,7 +6,7 @@ FileName = '5011CEM\Model\o3_surface_20180701000000.nc'; % define the name of th
 
 Contents = ncinfo(FileName); % Store the file content information in a variable.
 
-LoadAllData;
+[AllDataMem] = LoadAllData(FileName);
 
 LoadHours;
 
