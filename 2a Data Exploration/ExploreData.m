@@ -2,7 +2,7 @@
 clear all
 close all
 
-FileName = '..\Model\o3_surface_20180701000000.nc';
+FileName = '5011CEM\Model\o3_surface_20180701000000.nc';
 
 Contents = ncinfo(FileName);
 
