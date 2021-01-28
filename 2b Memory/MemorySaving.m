@@ -8,7 +8,7 @@ Contents = ncinfo(FileName); % Store the file content information in a variable.
 
 [AllDataMem] = LoadAllData(FileName);
 
-LoadHours;
+[HourDataMem] = LoadHours(FileName);
 
 [HourMem] = LoadAllHours(FileName);
 
