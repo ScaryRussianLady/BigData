@@ -10,6 +10,6 @@ Contents = ncinfo(FileName); % Store the file content information in a variable.
 
 LoadHours;
 
-LoadAllHours;
+[HourMem] = LoadAllHours(FileName);
 
 ReportResults;
