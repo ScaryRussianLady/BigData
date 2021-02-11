@@ -3,7 +3,7 @@ function ParallelProcessing
 clear all
 close all
 
-FileName = '..\Model\o3_surface_20180701000000.nc';
+FileName = '5011CEM\Model\o3_surface_20180701000000.nc';
 
 Contents = ncinfo(FileName);
 
@@ -97,7 +97,7 @@ for idxTime = 1:NumHours
     % this being a 'big data' project due to the processing time (not the
     % pure volume of raw data alone).
     T4 = toc;
-    parfor idx = 1: 100 % size(Data2Process,1)
+    parfor idx = 8: 5000 % size(Data2Process,1)
         [EnsembleVectorPar(idx, idxTime)] = EnsembleValue(Data2Process(idx,:,:,:), LatLon, RadLat, RadLon, RadO3);
         send(DataQ, idx);
     end
@@ -118,7 +118,7 @@ fprintf('Total processing time for %i workers = %.2f s\n', PoolSize, sum(T3));
 %% 11: ### PROCESSING COMPLETE DATA NEEDS TO BE SAVED  ###
 
 function nUpdateWaitbar(~) % nested function
-    waitbar(p/N, hWaitBar,  sprintf('Hour %i, %.3f complete, %i out of %i', idxTime, p/N*100, p, N));
+    waitbar(p/N, hWaitBar,  sprintf('Hour %i, %.3f complete, %i out of %i', 50, p/N*100, p, N));
     p = p + 1;
 end
 
