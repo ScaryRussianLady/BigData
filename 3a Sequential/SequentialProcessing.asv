@@ -26,13 +26,7 @@ tic
 
  %prompt = 'How much data would you like to process? (do not use commas or other punctuation)'; % Asks the user how much data they wish to process.
  %dataSize = input(prompt) % Takes the users input.
-
- firstData = 50;
- secondData = 60;
- thirdData = 70;
- 
- %dataSize = [firstData,secondData,thirData];
-for dataSize = [firstData,secondData,thirdData]
+for dataSize = [500,2500,80]
     for NumHour = 1:25 % loop through each hour
         fprintf('Processing hour %i\n', NumHour)
         DataLayer = 1; % which 'layer' of the array to load the model data into
@@ -75,12 +69,12 @@ for dataSize = [firstData,secondData,thirdData]
     end
     tSeq = toc;
     fprintf('Total time for sequential processing = %.2f s\n\n', tSeq)
-    y = [];
-    dataSize = [firstData, secondData, thirdData];
-for idx = 1:size(,2)
-    y(idx) = x(idx)
-end
+     Result = [];
+        for idx = 1: 1
+            Result(idx) = tSeq;
+        end
     dataSize
+    
 end
-fmt=['array =' repmat(' %1.0f',1,numel(array))];
-fprintf(fmt,array)
+fmt=['Result =' repmat(' %1.0f',1,numel(Result))];
+fprintf(fmt,Result)
