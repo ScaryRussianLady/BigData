@@ -2,8 +2,8 @@
 clear all
 close all
 
-OriginalFileName = './Model/o3_surface_20180701000000.nc';
-NewFileName = './Model/TestFileNaN.nc';
+OriginalFileName = '5011CEM/Model/o3_surface_20180701000000.nc';
+NewFileName = '5011CEM/Model/TestFileNaN.nc';
 copyfile(OriginalFileName, NewFileName);
 
 C = ncinfo(NewFileName);
