@@ -1,6 +1,5 @@
 function ParallelProcessing
 %% 1: Load Data
-clear all
 close all
 
 FileName = '5011CEM\Model\o3_surface_20180701000000.nc';
