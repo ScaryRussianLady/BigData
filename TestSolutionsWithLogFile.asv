@@ -16,13 +16,13 @@ Contents = ncinfo(DataFileName); % Store the file content information in a varia
 %% Create and open log file
 LogFileName = 'AnalysisLog.txt';
 
-prompt = 'Would you like to clear the log file before you continue? (1(Yes)/0(No))';
+prompt = 'Would you like to clear the log file before you continue? (Y/N)';
 x = input(prompt)
 
-if x == 1
+if x == 'Y'
     LogID = fopen('AnalysisLog.txt', 'w');
     fprintf(LogID, '%s: Starting analysis of %s\n', datestr(now, 0), DataFileName);
-else
+
     LogID = fopen('AnalysisLog.txt', 'a');
     fprintf(LogID, '%s: Starting analysis of %s\n', datestr(now, 0), DataFileName);
 end
