@@ -2,7 +2,7 @@
 clear all
 close all
 
-FileIn = '.\Model\o3_surface_20180701000000.nc';
+FileIn = '5011CEM\Model\o3_surface_20180701000000.nc';
 C = ncinfo(FileIn);
 VarNames = {C.Variables.Name};
 
