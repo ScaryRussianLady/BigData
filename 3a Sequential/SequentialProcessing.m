@@ -23,10 +23,9 @@ NumLat = 400; % number of latitude locations ot load
 StartLon = 1; % longitude location to start loading
 NumLon = 700; % number of longitude locations ot load
 tic
+Result = []; % initialise the empty result array %
 
- %prompt = 'How much data would you like to process? (do not use commas or other punctuation)'; % Asks the user how much data they wish to process.
- %dataSize = input(prompt) % Takes the users input.
-for dataSize = [500,2500,8000]
+for dataSize = [500,1000,5000]
     for NumHour = 1:25 % loop through each hour
         fprintf('Processing hour %i\n', NumHour)
         DataLayer = 1; % which 'layer' of the array to load the model data into
@@ -69,12 +68,11 @@ for dataSize = [500,2500,8000]
     end
     tSeq = toc;
     fprintf('Total time for sequential processing = %.2f s\n\n', tSeq)
-     Result = [];
-        for idx = 1: 1
-            Result(idx) = tSeq;
-        end
+     
+    Result(end+1) = tSeq; % append to the result array %
     dataSize
     
 end
-fmt=['Result =' repmat(' %1.0f',1,numel(Result))];
+% print out the result array at the end %
+fmt=['Result of total time for each data size, separated by a space =' repmat(' %1.0f',1,numel(Result))];
 fprintf(fmt,Result)
