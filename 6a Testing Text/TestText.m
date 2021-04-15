@@ -36,7 +36,7 @@ end
 
 %% Test File with Errors
 %% Set file to test
-    FileName = '5011CEM/TestyTest3.nc'; % define our test file
+    FileName = '5011CEM/TestyTest.nc'; % define our test file
 
     Contents = ncinfo(FileName); % Store the file content information in a variable.
     FileID = netcdf.open(FileName,'NC_NOWRITE'); % open file read only and create handle
