@@ -2,7 +2,7 @@ function ParallelProcessing
 %% 1: Load Data
 close all
 
-FileName = '5011CEM\Model\o3_surface_20180701000000.nc';
+FileName = '5011CEM2021balodea2\Model\o3_surface_20180701000000.nc';
 
 Contents = ncinfo(FileName);
 
@@ -25,9 +25,10 @@ WorkerOptions = 6;
 Results = [];
 
         
-for DataOptions = [100]
+for DataOptions = [500,1000]
     DataParameter = DataOptions;
     fprintf('%i\n', DataParameter);
+    y1Vals = [];
     for idxPro = 1: WorkerOptions
     fprintf('%i\n', idxPro);
         
@@ -118,16 +119,28 @@ for DataOptions = [100]
         fprintf('Total processing time for %i workers = %.2f s\n', idxPro, sum(T3));
         format longG
         Results = [Results; idxPro, sum(T3)]
+        y1Vals = [y1Vals; sum(T3)]
     end
-    
-    x2Vals = [1:6]
-    y2Vals = [sum(T3)]
+    x1Vals = [1:WorkerOptions]
     figure(1)
-    yyaxis right
-    plot(x2Vals, y2Vals, '-rx')
+    hold on
+    plot(x1Vals, y1Vals, 'Color', rand(1,3), 'LineWidth', 3)
     xlabel('Number of Processors')
     ylabel('Processing Time (s)')
     title('Processing Time vs Number of Processors')
+    p = polyfit(x1Vals,y1Vals,1);
+    f = polyval(p,x1Vals);
+    hold on
+    plot(x1Vals,f,'--r')
 end
-legend('500 Data', '1,000 Data', '5,000 Data')
+xl = xlim;
+yl = ylim;
+xt = 0.05 * (xl(2)-xl(1)) + xl(1);
+yt = 0.90 * (yl(2)-yl(1)) + yl(1);
+caption = sprintf('y = %f * x + %f', p(1), p(2));
+text(xt, yt, caption, 'FontSize', 8, 'Color', 'r', 'FontWeight', 'bold');
+legend('500 Data', 'Best Fit: 500', '1,000 Data', 'Best Fit: 1,000', '5,000 Data', 'Best Fit: 5,000')
+
+estimation = round((7200-p(2))/-p(1));
+estimation
 end % end function

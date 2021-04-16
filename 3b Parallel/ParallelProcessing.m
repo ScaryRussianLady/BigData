@@ -128,7 +128,19 @@ for DataOptions = [500,1000,5000]
     xlabel('Number of Processors')
     ylabel('Processing Time (s)')
     title('Processing Time vs Number of Processors')
-    polyfit(XAxis,YAxis,1)
+    p = polyfit(x1Vals,y1Vals,1);
+    f = polyval(p,x1Vals);
+    hold on
+    plot(x1Vals,f,'--r')
 end
-legend('500 Data', '1,000 Data', '5,000 Data')
+xl = xlim;
+yl = ylim;
+xt = 0.05 * (xl(2)-xl(1)) + xl(1);
+yt = 0.90 * (yl(2)-yl(1)) + yl(1);
+caption = sprintf('y = %f * x + %f', p(1), p(2));
+text(xt, yt, caption, 'FontSize', 8, 'Color', 'r', 'FontWeight', 'bold');
+legend('500 Data', 'Best Fit: 500', '1,000 Data', 'Best Fit: 1,000', '5,000 Data', 'Best Fit: 5,000')
+
+estimationOfProcessors = round((7200-p(2))/-p(1));
+estimationOfProcessors
 end % end function
