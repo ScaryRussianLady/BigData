@@ -21,15 +21,17 @@ NumLat = 400;
 StartLon = 1;
 NumLon = 700;
 
-DataOptions = [100,150,200];
-WorkerOption = 6;
+WorkerOptions = 6;
 Results = [];
 
-for idxPro = 1: workerOption
-    fprintf('%i', idxPro);
-
-    for idx1 = 1: size(DataOptions,3)
-    DataParameter = DataOptions(idx1);
+        
+for DataOptions = [100]
+    DataParameter = DataOptions;
+    fprintf('%i\n', DataParameter);
+    for idxPro = 1: WorkerOptions
+    fprintf('%i\n', idxPro);
+        
+        %fprintf('%i', idx1)
         %% 3: Pre-allocate output array memory
         % the '-4' value is due to the analysis method resulting in fewer output
         % values than the input array.
@@ -107,7 +109,6 @@ for idxPro = 1: workerOption
             fprintf('Parallel processing time for hour %i : %.1f s\n', idxTime, T3(idxTime))
 
         end % end time loop        
-        Results = [Results; idxPro, DataParameter, sum(T3)]
 
         T2 = toc;
         delete(gcp);
@@ -115,8 +116,18 @@ for idxPro = 1: workerOption
         %% 10: Reshape ensemble values to Lat, lon, hour format
         EnsembleVectorPar = reshape(EnsembleVectorPar, 696, 396, []);
         fprintf('Total processing time for %i workers = %.2f s\n', idxPro, sum(T3));
+        format longG
+        Results = [Results; idxPro, sum(T3)]
     end
+    
+    x2Vals = [1:6]
+    y2Vals = [sum(T3)]
+    figure(1)
+    yyaxis right
+    plot(x2Vals, y2Vals, '-rx')
+    xlabel('Number of Processors')
+    ylabel('Processing Time (s)')
+    title('Processing Time vs Number of Processors')
 end
-
-
+legend('500 Data', '1,000 Data', '5,000 Data')
 end % end function

@@ -8,7 +8,7 @@ DataTypes = {'NC_Byte', 'NC_Char', 'NC_Short', 'NC_Int', 'NC_Float', 'NC_Double'
 
 %% Test a good file
 %% Set file to test
-FileName = '5011CEM/Model/o3_surface_20180701000000.nc'; % define our test file
+FileName = '5011CEM\Model\o3_surface_20180701000000.nc'; % define our test file
 
 Contents = ncinfo(FileName); % Store the file content information in a variable.
 FileID = netcdf.open(FileName,'NC_NOWRITE'); % open file read only and create handle
@@ -36,7 +36,7 @@ end
 
 %% Test File with Errors
 %% Set file to test
-    FileName = '5011CEM/TestyTest.nc'; % define our test file
+    FileName = '5011CEM\o3_surface_20180701000000.nc'; % define our test file
 
     Contents = ncinfo(FileName); % Store the file content information in a variable.
     FileID = netcdf.open(FileName,'NC_NOWRITE'); % open file read only and create handle

@@ -1,4 +1,5 @@
 function [HourDataMem] = LoadHours(FileName)
+
 %% Section 3: Loading all the data for a single hour from all the models
 Contents = ncinfo(FileName); % Store the file content information in a variable.
 % We combine the aboce code to cycle through the names and load each model.

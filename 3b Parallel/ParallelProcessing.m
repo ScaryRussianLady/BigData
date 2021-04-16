@@ -2,7 +2,7 @@ function ParallelProcessing
 %% 1: Load Data
 close all
 
-FileName = '5011CEM\Model\o3_surface_20180701000000.nc';
+FileName = '5011CEM2021balodea2\Model\o3_surface_20180701000000.nc';
 
 Contents = ncinfo(FileName);
 
@@ -21,16 +21,18 @@ NumLat = 400;
 StartLon = 1;
 NumLon = 700;
 
-DataOptions = [50,100,150];
-WorkerOption = 6;
+WorkerOptions = 6;
 Results = [];
 
-
+        
 for DataOptions = [500,1000,5000]
-%DataParameter = DataOptions(idx1);
-
-    for idxPro = 1: WorkerOption
-        fprintf('%i', idxPro);
+    DataParameter = DataOptions;
+    fprintf('%i\n', DataParameter);
+    y1Vals = [];
+    for idxPro = 1: WorkerOptions
+    fprintf('%i\n', idxPro);
+        
+        %fprintf('%i', idx1)
         %% 3: Pre-allocate output array memory
         % the '-4' value is due to the analysis method resulting in fewer output
         % values than the input array.
@@ -98,7 +100,7 @@ for DataOptions = [500,1000,5000]
             % this being a 'big data' project due to the processing time (not the
             % pure volume of raw data alone).
             T4 = toc;
-            parfor idx = 8: DataOptions % size(Data2Process,1)
+            parfor idx = 8: DataParameter % size(Data2Process,1)
                 [EnsembleVectorPar(idx, idxTime)] = EnsembleValue(Data2Process(idx,:,:,:), LatLon, RadLat, RadLon, RadO3);
                 send(DataQ, idx);
             end
@@ -108,7 +110,6 @@ for DataOptions = [500,1000,5000]
             fprintf('Parallel processing time for hour %i : %.1f s\n', idxTime, T3(idxTime))
 
         end % end time loop        
-        Results = [Results; idxPro, DataOptions, sum(T3)]
 
         T2 = toc;
         delete(gcp);
@@ -116,8 +117,18 @@ for DataOptions = [500,1000,5000]
         %% 10: Reshape ensemble values to Lat, lon, hour format
         EnsembleVectorPar = reshape(EnsembleVectorPar, 696, 396, []);
         fprintf('Total processing time for %i workers = %.2f s\n', idxPro, sum(T3));
+        format longG
+        Results = [Results; idxPro, sum(T3)]
+        y1Vals = [y1Vals; sum(T3)]
     end
+    x1Vals = [1:WorkerOptions]
+    figure(1)
+    hold on
+    plot(x1Vals, y1Vals, 'Color', rand(1,3), 'LineWidth', 3)
+    xlabel('Number of Processors')
+    ylabel('Processing Time (s)')
+    title('Processing Time vs Number of Processors')
+    polyfit(XAxis,YAxis,1)
 end
-
-
+legend('500 Data', '1,000 Data', '5,000 Data')
 end % end function

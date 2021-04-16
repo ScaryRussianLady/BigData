@@ -1,7 +1,7 @@
 %% This script allows you to open and explore the data in a *.nc file
 close all
 
-FileName = '5011CEM\Model\o3_surface_20180701000000.nc';
+FileName = '5011CEM2021balodea2\Model\o3_surface_20180701000000.nc';
 
 Contents = ncinfo(FileName);
 

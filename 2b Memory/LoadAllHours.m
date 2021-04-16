@@ -1,4 +1,5 @@
 function [HourMem] = LoadAllHours(FileName)
+
 %% Section 4: Cycle through the hours and load all the models for each hour and record memory use
 Contents = ncinfo(FileName); % Store the file content information in a variable.
 % We use an index named 'StartHour' in our loop
