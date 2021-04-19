@@ -20,9 +20,11 @@ LogFileName = 'AnalysisLog.txt';
 prompt = 'Would you like to clear the log file before you continue? (1(Yes)/0(No))';
 x = input(prompt)
 
+% if the user says yes, clear the log file.
 if x == 1
     LogID = fopen('AnalysisLog.txt', 'w');
     fprintf(LogID, '%s: Starting analysis of %s\n', datestr(now, 0), FileName);
+% otherwise keep the log file.
 else
     LogID = fopen('AnalysisLog.txt', 'a');
     fprintf(LogID, '%s: Starting analysis of %s\n', datestr(now, 0), FileName);
@@ -35,9 +37,11 @@ end
 
 StartLat = 1;
 StartLon = 1;
-
+% print out the current file being tested.
 fprintf('Testing files: %s\n', FileName)
+% for each hour in the data.
 for idxHour = 1:25
+    % print out the current hour in the cycle.
     fprintf('Testing hour: %i\n', idxHour)
     for idx = 0:size(Contents.Variables,2)-1 % loop through each variable
         % read data type for each variable and store
@@ -54,9 +58,11 @@ for idxHour = 1:25
     %% find character data types
     FindText = strcmp('NC_Char', DataTypes(datatype));
     
+    % if there is any text, log it.
     if any(FindText)
         fprintf('Error, text variables present:\n')
         fprintf(LogID, '%s: %s processing data hour %i\n', datestr(now, 0), 'Text Error', idxHour);
+    % if there is no text, log it.
     else
         fprintf('All data is numeric, continue analysis.\n')
         fprintf(LogID, '%s: %s processing data hour %i\n', datestr(now, 0), 'Success', idxHour);
@@ -81,9 +87,12 @@ for idxHour = 1:25
     
     fprintf('\n')
     
+    % pause for 1 second so it does not rush through the entire process.
     pause(1)
 end
+ % print out that the data analysis will begin.
  fprintf('Everything logged. Starting data analysis..\n')
  pause(2)
+ % run parallel processing.
  ParallelProcessing
  fclose(LogID);

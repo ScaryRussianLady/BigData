@@ -2,6 +2,7 @@ function ParallelProcessing
 %% 1: Load Data
 close all
 
+% the data to be analysed.
 FileName = '5011CEM2021balodea2\Model\o3_surface_20180701000000.nc';
 
 Contents = ncinfo(FileName);
@@ -21,16 +22,23 @@ NumLat = 400;
 StartLon = 1;
 NumLon = 700;
 
+% number of processors available.
 WorkerOptions = 6;
+% initialise empty results array.
 Results = [];
 
-        
+% cycle through each data set.        
 for DataOptions = [500,1000,5000]
+    % assign the current data set to DataParameter.
     DataParameter = DataOptions;
+    % print out the current data set.
     fprintf('%i\n', DataParameter);
+    % initialise an empty array for the y-values (processing time).
     y1Vals = [];
+    % cycle through each processor.
     for idxPro = 1: WorkerOptions
-    fprintf('%i\n', idxPro);
+        % print out the current processor.
+        fprintf('%i\n', idxPro);
         
         %fprintf('%i', idx1)
         %% 3: Pre-allocate output array memory
@@ -75,6 +83,7 @@ for DataOptions = [500,1000,5000]
 
         %% Parallel Analysis
             %% 7: Create the parallel pool and attache files for use
+            % set PoolSize to the current number of processors
             PoolSize = idxPro;
 
             if isempty(gcp('nocreate'))
@@ -118,29 +127,48 @@ for DataOptions = [500,1000,5000]
         EnsembleVectorPar = reshape(EnsembleVectorPar, 696, 396, []);
         fprintf('Total processing time for %i workers = %.2f s\n', idxPro, sum(T3));
         format longG
+        % append the processor and the time taken to process with the
+        % current data set and number of processors.
         Results = [Results; idxPro, sum(T3)]
+        % add the time taken to process to the y-value array.
         y1Vals = [y1Vals; sum(T3)]
     end
+    % initialise x-value array with the number of processors.
     x1Vals = [1:WorkerOptions]
     figure(1)
+    % hold on to the previous values.
     hold on
+    % plot x and y with a different colour for each data set.
     plot(x1Vals, y1Vals, 'Color', rand(1,3), 'LineWidth', 3)
+    % x-axis labeled.
     xlabel('Number of Processors')
+    % y-axis labeled.
     ylabel('Processing Time (s)')
+    % title of the graph.
     title('Processing Time vs Number of Processors')
+    % p returns m and c to be used for working out the lines of best fit.
     p = polyfit(x1Vals,y1Vals,1);
     f = polyval(p,x1Vals);
+    % hold on to the previous values in the graphh.
     hold on
+    % plot the line of best fit.
     plot(x1Vals,f,'--r')
 end
+% lines 158-163 work out the line of best fit equation and then display
+% this on the top left of the graph.
 xl = xlim;
 yl = ylim;
 xt = 0.05 * (xl(2)-xl(1)) + xl(1);
 yt = 0.90 * (yl(2)-yl(1)) + yl(1);
 caption = sprintf('y = %f * x + %f', p(1), p(2));
 text(xt, yt, caption, 'FontSize', 8, 'Color', 'r', 'FontWeight', 'bold');
+% keys so that the client has an easier time of understanding the values.
 legend('500 Data', 'Best Fit: 500', '1,000 Data', 'Best Fit: 1,000', '5,000 Data', 'Best Fit: 5,000')
 
+% work out the estimated number of processors required for the given target
+% processing time.
+% 7200 is the value of 2 hours in seconds.
 estimationOfProcessors = round((7200-p(2))/-p(1));
+% print out the estimation.
 estimationOfProcessors
 end % end function
