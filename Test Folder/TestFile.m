@@ -93,6 +93,8 @@ end
  % print out that the data analysis will begin.
  fprintf('Everything logged. Starting data analysis..\n')
  pause(2)
+ % run sequential processing.
+ SequentialProcessing
  % run parallel processing.
  ParallelProcessing
  fclose(LogID);

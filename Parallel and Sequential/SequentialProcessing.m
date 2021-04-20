@@ -25,7 +25,7 @@ NumLon = 700; % number of longitude locations ot load
 tic
 Result = []; % initialise the empty result array %
 
-for dataSize = [500,1000,5000] % loop through each data set
+for dataSize = [50,100,500,1000,5000] % loop through each data set
     for NumHour = 1:25 % loop through each hour
         fprintf('Processing hour %i\n', NumHour) % print the current hour.
         DataLayer = 1; % which 'layer' of the array to load the model data into
@@ -68,7 +68,8 @@ for dataSize = [500,1000,5000] % loop through each data set
     end
     tSeq = toc;
     fprintf('Total time for sequential processing = %.2f s\n\n', tSeq)
-     
+    % plot this on to a graph.
+    SeqGraph(1,tSeq)
     Result(end+1) = tSeq; % append to the result array
     dataSize
     
