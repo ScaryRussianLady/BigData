@@ -90,11 +90,6 @@ for idxHour = 1:25
     % pause for 1 second so it does not rush through the entire process.
     pause(1)
 end
- % print out that the data analysis will begin.
- fprintf('Everything logged. Starting data analysis..\n')
+
  pause(2)
- % run sequential processing.
- SequentialProcessing
- % run parallel processing.
- ParallelProcessing
  fclose(LogID);
