@@ -17,8 +17,9 @@ The five SMART Targets that have been chosen for the project are:
   4.	Push and commit changes to GitHub once any sort of file has been modified, the commit note must include the file version (incremental in the progression of modifications),
   where the change was made and why it was done. This will create a detailed network of all changes made to the repository.
 
-  5.	When modifying an individual file, once a significant modification has been made it must be tested in order to check whether it is successful or not. If any errors appear,
-  further changes to the file must not be made to avoid any more errors that may be harder to resolve. However, if the test succeeds, programming of the file can continue.
+  5.Parallel processing must successfully measure at least three different data sizes: 500, 1,000 and 5,000. There should be no errors from Matlab R2020a, instead a consistent
+  display of results should be shown in the terminal with the appropriate processing time (they will seem logical and realistic). These results will be stored into an array for
+  that iteration and later displayed on a graph that can be held long-term to prove the success of measurement in processing time.
 
 
 Gantt Chart Link: 
